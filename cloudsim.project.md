@@ -1,3 +1,5 @@
+<!-- -. 等于 extends  -->
+
 # hierarchy 类结构图
 ## brief
 CloudLet = 需要完成的任务
@@ -9,6 +11,8 @@ VM = virtual machine 主机里的一个虚拟系统 占用一定的 PE，RAM，B
 PE = process element 一个运行单位，可以是 1 2 3 ...
 RAM = 内存占用 可以是 512MB 1GB 2GB...
 BW = bandwidth 占用的宽带
+Event = 发送的事件
+predicate = 用来比对事件类型？
 
 ## CloudLet
 ResCloudlet
@@ -297,3 +301,43 @@ https://www.youtube.com/watch?v=qBFlB5puRRs
   --> [@datacenter]
 [@CloudLets]
   --> [@Broker]
+
+
+# classes 类
+## SimEntity
+schedule          发送带数据的event到另一个实体，可以通过 id/port
+scheduleNow       立刻发送信息
+scheduleFirst     发送高优先信息
+scheduleFirstNow  立刻发送高优先信息
+
+send              发送event到另一个实体
+sendNow           立刻发送
+getNetworkDelay   获取网络延迟，同发送信息得到
+
+事件相关：
+numEventWaiting   等待事件数量
+selectEvent       选中事件
+cancelEvent       取消事件
+getNextEvent      获取下一个事件
+waitForEvent      等待特定事件
+processEvent      运行事件
+
+实体相关：
+startEntity       启动实体
+pause             暂停一段时间
+shutdownEntity    关闭实体
+run               运行实体
+clone             复制实体
+
+attribute:
+id
+name
+state
+evbuf = EventBuffer
+
+## datacenter -. SimEntity = 相当于服务器群，里面有host等资源 (如PE， RAM， BW等)
+
+## NetworkDatacenter -. datacenter
+
+
+## PowerDatacenter -. datacenter
