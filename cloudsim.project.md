@@ -7,6 +7,7 @@ Broker = 负责任务的调度和安排
 Scheduler = 负责时间的安排
 Datacenter = 相当于服务器群，里面有host等资源 (如PE， RAM， BW等)
 Host = 相当于服务器，里面有多个VM
+Switch = 交换机?
 VM = virtual machine 主机里的一个虚拟系统 占用一定的 PE，RAM，BW等
 PE = process element 一个运行单位，可以是 1 2 3 ...
 RAM = 内存占用 可以是 512MB 1GB 2GB...
@@ -25,25 +26,25 @@ CloudLet = 立刻要执行的任务
 SimEntity -> cloneable
   CloudInformationService
   CloudSimShutdown
-  ContainerDatacenter
-    PowerContainerDatacenter
-      PowerContainerDatacenterCM
 
-  ContainerDatacenterBroker
-  DatacenterBroker
-    PowerDatacenterBroker
-  NetDatacenterBroker
 
-  Datacenter
-    [DatacenterCharacteristics]
-    NetworkDatacenter
-    PowerDatacenter
-      PowerDatacenterNonPowerAware
+# simEntity/ Broker
+ContainerDatacenterBroker
+DatacenterBroker
+  PowerDatacenterBroker
+NetDatacenterBroker
 
-  Switch
-    AggregateSwitch
-    EdgeSwitch
-    RootSwitch
+# simEntity/ Datacenter
+Datacenter
+  [DatacenterCharacteristics]
+  NetworkDatacenter
+  PowerDatacenter
+    PowerDatacenterNonPowerAware
+# simEntity/ Switch 
+Switch -> simEntity
+  AggregateSwitch
+  EdgeSwitch
+  RootSwitch
 
 ## Host
 HostStateHistoryEntry
@@ -71,6 +72,10 @@ ContainerHost
       PowerContainerHostUtilizationHistory
 ContainerVm
   PowerContainerVm
+.
+ContainerDatacenter -> simEntity
+  PowerContainerDatacenter
+    PowerContainerDatacenterCM
 
 ## Predicate
 Predicate
@@ -231,7 +236,7 @@ Object
       ParameterException
 Object
   Consts
-
+.
   DataCloudTags
   File
   FileAttribute
@@ -305,39 +310,106 @@ https://www.youtube.com/watch?v=qBFlB5puRRs
 
 # classes 类
 ## SimEntity
-schedule          发送带数据的event到另一个实体，可以通过 id/port
-scheduleNow       立刻发送信息
-scheduleFirst     发送高优先信息
-scheduleFirstNow  立刻发送高优先信息
-
-send              发送event到另一个实体
-sendNow           立刻发送
-getNetworkDelay   获取网络延迟，同发送信息得到
-
-事件相关：
-numEventWaiting   等待事件数量
-selectEvent       选中事件
-cancelEvent       取消事件
-getNextEvent      获取下一个事件
-waitForEvent      等待特定事件
-processEvent      运行事件
-
-实体相关：
-startEntity       启动实体
-pause             暂停一段时间
-shutdownEntity    关闭实体
-run               运行实体
-clone             复制实体
-
 attribute:
-id
-name
-state
-evbuf = EventBuffer
+  id
+  name
+  state
+  evbuf = EventBuffer
+
+methods: 
+  schedule          发送带数据的event到另一个实体，可以通过 id/port
+  scheduleNow       立刻发送信息
+  scheduleFirst     发送高优先信息
+  scheduleFirstNow  立刻发送高优先信息
+
+  send              发送event到另一个实体
+  sendNow           立刻发送
+  getNetworkDelay   获取网络延迟，同发送信息得到
+
+  事件相关：
+  numEventWaiting   等待事件数量
+  selectEvent       选中事件
+  cancelEvent       取消事件
+  getNextEvent      获取下一个事件
+  waitForEvent      等待特定事件
+  processEvent      运行事件
+
+  实体相关：
+  startEntity       启动实体
+  pause             暂停一段时间
+  shutdownEntity    关闭实体
+  run               运行实体
+  clone             复制实体
+
+
 
 ## datacenter -. SimEntity = 相当于服务器群，里面有host等资源 (如PE， RAM， BW等)
+attributes:
+  characteristics
+  regionalCisName 
+  `VmAllocationPolicy`
+  lastProcessTime
+  `storageList`
+  `vmList`
+  schedulingInterval
 
-## NetworkDatacenter -. datacenter
+methods 
+  registerOtherEntity 子类用来创建为不同资源的
+  processEvent 根据不同tag做不同相应 
+  processDataDelete 删除文件 
+  processDataAdd 添加文件 
+  processPingRequest 测ping网络
+  processCloudletStatus 返回cloudlet状态
+  processOtherEvent 处理其他事件,子类overwrite来处理特别任务 
+  processVmCreate 处理创建Vm的Event 
+  processVmDestroy 销毁Vm 
+  processVmMigrate 迁移Vm 
+  processCloudlet 根据事件处理cloudlet 
+  processCloudletMove 移动一个cloudlet 
+  processCloudletSubmit 运行一个Cloudlet 
+  predictFileTransferTime 预计转移文件时间 
+  processCloudletResume 恢复运行Cloudlet
+  processCloudletPause 暂停运行Cloudlet
+  processCloudletCancel 取消Cloudlet 
+  updateCloudletProcessing 更新Cloudlet运行资源
+  checkCloudletCompletion 查看Cloudlet完成没
+  addFile 增加文件到资源 
+  contain 检查datacenter包含不包含特定文件
+  deleteFileFromStorage 从资源中删除文件 
+  shutdownEntity 关闭datacenter
+  startEntity 启动datacenter
+  getHostList 获取Host列表
 
 
-## PowerDatacenter -. datacenter
+## NetworkDatacenter -. datacenter = 控制Vm和Switch
+attribute 
+  VmToSwitchid 匹配Vm和Switch
+  HostToSwitchid 匹配Host和Switch 
+  Switchlist 匹配交换机和datacenter 
+  VmToHostList 匹配Vm和HostList
+
+method
+  getEdgeSwitch 获取所有边缘交换机
+  processVmCreateNetwork 创建Vm 
+  ProcessCloudletSubmit 运行一个Cloudlet
+
+## PowerDatacenter -. datacenter =控制能源和迁移
+attribute 
+  power 消耗的能源
+  disableMigrations 是否可迁移
+  cloudletSubmitted 最后一次运行 
+  migrationCount Vm迁移的次数 
+  isInMigration 数据中心是否在迁移
+
+method
+  updateCloudletProcessing 更新Cloudlet运行资源
+  updateCloudetProcessingWithoutSchedulingFutureEvents 直接更新Cloudlet 
+  updateCloudetProcessingWithoutSchedulingFutureEventsForce 强制更新Cloudlet
+  processVmMigrate 迁移Vm
+  processCloudletSubmit 运行一个Cloudlet 
+  incrementMigrationCount 自动1迁移次数
+
+# PowerDatacenterNonPowerAware
+attribute 
+
+method 
