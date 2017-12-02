@@ -413,3 +413,11 @@ method
 attribute 
 
 method 
+
+
+# Network/ DelayMatrix_Float = 通过delay代表两个node之间的距离 
+method 
+  calculateShortestPath 计算最短路径 
+  createDelayMatrix 创建矩阵存储每个点之间的延迟
+  getDelay 获取两个点之间的延迟 
+# Network/ FloydWarshall_Float = 
