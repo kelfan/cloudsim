@@ -413,7 +413,7 @@ method
 ## Network/ FloydWarshall_Float = 
 
 
-## Network/Datacenter/  NetworkDatacenter -. datacenter = 控制Vm和Switch
+## Network/Datacenter/ NetworkDatacenter -. datacenter = 控制Vm和Switch
 attribute 
   VmToSwitchid 匹配Vm和Switch
   HostToSwitchid 匹配Host和Switch 
@@ -424,3 +424,28 @@ method
   getEdgeSwitch 获取所有边缘交换机
   processVmCreateNetwork 创建Vm 
   ProcessCloudletSubmit 运行一个Cloudlet
+
+## Network/Datacenter/ Switch -.SIMentity = 把packets发送到Switch上的Hosts上
+method 
+  processEvent 处理事件 
+    processpacket_down 发送packet到Host 通过down
+    processpacket_up 发送packet到Host 通过uplink port
+    processpacketforward 发送packet到Switch上的hosts
+    processOtherEvent 处理其他事件 
+    processhostpacket 发送packet到host 
+    registerHost 注册host到Switch 
+  processpacket 处理接收到的packet 
+  startEntity 启动实体 
+  shutdownEntity 关闭实体 
+
+
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
