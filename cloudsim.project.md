@@ -381,17 +381,7 @@ methods
   getHostList 获取Host列表
 
 
-## NetworkDatacenter -. datacenter = 控制Vm和Switch
-attribute 
-  VmToSwitchid 匹配Vm和Switch
-  HostToSwitchid 匹配Host和Switch 
-  Switchlist 匹配交换机和datacenter 
-  VmToHostList 匹配Vm和HostList
 
-method
-  getEdgeSwitch 获取所有边缘交换机
-  processVmCreateNetwork 创建Vm 
-  ProcessCloudletSubmit 运行一个Cloudlet
 
 ## PowerDatacenter -. datacenter =控制能源和迁移
 attribute 
@@ -409,15 +399,28 @@ method
   processCloudletSubmit 运行一个Cloudlet 
   incrementMigrationCount 自动1迁移次数
 
-# PowerDatacenterNonPowerAware
+## PowerDatacenterNonPowerAware
 attribute 
 
 method 
 
 
-# Network/ DelayMatrix_Float = 通过delay代表两个node之间的距离 
+## Network/ DelayMatrix_Float = 通过delay代表两个node之间的距离 
 method 
   calculateShortestPath 计算最短路径 
   createDelayMatrix 创建矩阵存储每个点之间的延迟
   getDelay 获取两个点之间的延迟 
-# Network/ FloydWarshall_Float = 
+## Network/ FloydWarshall_Float = 
+
+
+## Network/Datacenter/  NetworkDatacenter -. datacenter = 控制Vm和Switch
+attribute 
+  VmToSwitchid 匹配Vm和Switch
+  HostToSwitchid 匹配Host和Switch 
+  Switchlist 匹配交换机和datacenter 
+  VmToHostList 匹配Vm和HostList
+
+method
+  getEdgeSwitch 获取所有边缘交换机
+  processVmCreateNetwork 创建Vm 
+  ProcessCloudletSubmit 运行一个Cloudlet
