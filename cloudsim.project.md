@@ -439,13 +439,41 @@ method
   shutdownEntity 关闭实体 
 
 
-## Network/Datacenter/ 
-## Network/Datacenter/ 
-## Network/Datacenter/ 
-## Network/Datacenter/ 
-## Network/Datacenter/ 
-## Network/Datacenter/ 
-## Network/Datacenter/ 
+## Network/Datacenter/ AggregateSwitch .- Switch
+method 
+  processpacket_down
+  processpacketforward
+
+## Network/Datacenter/ EdgeSwitch .- Switch 
+method 
+  processpacket_up
+  processpacketforward
+
+## Network/Datacenter/ RootSwitch .- Switch 
+method
+  processpacket_up
+
+## Network/Datacenter/ AppcloudLet 
+method 
+  createCloudletList 
+
+## Network/Datacenter/ HostPacket = Packet模型 
+## Network/Datacenter/ NetworkCloudlet .- Cloudlet = Cloudlet模型 
+## Network/Datacenter/ NetworkDatacenterBroker
+method 
+  submitVmList 
+  submitCloudletList 
+  setLinkDC 
+  `processEvent` 根据不同的tag处理不同的Event 
+    processResourceCharacteristics 处理返回结果  
+    processResourceCharacteristicsRequest 处理请求 
+    processCloudletReturn 处理返回 
+    processOtherEvent 处理其他事件 
+  createVmsInDatacenterBase 创建Vm并管理Cloudlets
+  CreateVMs 创建Vm 
+  clearDatacenters清除数据中心 
+  
+
 ## Network/Datacenter/ 
 ## Network/Datacenter/ 
 ## Network/Datacenter/ 
