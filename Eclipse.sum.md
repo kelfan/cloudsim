@@ -1,3 +1,5 @@
+# shortcuts/ Ctrl + 点击 = Open declaration/implementation
+# shortcuts/ F4 =  选中元素的继承层次
 # shortcut/ctrl+shift+t search any classes
 # shortcut/Alt+ / = 代码提示
 同时，Eclipse中也有一个代码提示的快捷键:Alt+/；这个快捷键的名称就叫Content Assist。

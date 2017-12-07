@@ -381,7 +381,28 @@ methods
   getHostList 获取Host列表
 
 
-
+## cloudsim/ CloudletScheduler = 管理Cloudlet的执行和CPU,RAM,Bw等资源
+method
+  updateVmProcessing 
+  CloudletSubmit 让Cloudlet在Vm中执行 
+  cloudletCancel
+  cloudletPause
+  cloudletResume
+  cloudletFinish
+  getCloudletStatus
+  isFinishedCloudlets
+  getNextFinishedCloudlet
+  runningCloudlets
+  migrateCloudlet
+  getTotalUtilizationOfCpu
+  getCurrentRequestedMips 得到当前CPU速度 
+  getTotalCurrentAvailableMipsForCloudlet 
+  getTotalCurrentRequestedMipsForCloudlet
+  getTotalCurrentAllocatedMipsForCloudlet
+  getCurrentRequestedUtilizationOfRam
+  getCurrentRequestedUtilizationOfBw
+  getPreviousTime
+  ...
 
 ## PowerDatacenter -. datacenter =控制能源和迁移
 attribute 
@@ -398,6 +419,8 @@ method
   processVmMigrate 迁移Vm
   processCloudletSubmit 运行一个Cloudlet 
   incrementMigrationCount 自动1迁移次数
+
+
 
 ## PowerDatacenterNonPowerAware
 attribute 
@@ -474,6 +497,16 @@ method
   clearDatacenters清除数据中心 
   
 
-## Network/Datacenter/ 
+## Network/Datacenter/ NetworkCloudletSpaceSharedScheduler .- CloudletScheduler = 管理Cloudlet的执行和管理CPU,RAM,Bw等资源
+method 
+  updateVmProcessing
+  changetonextstage 更新到下一阶段 
+  cloudletCancel
+  cloudletPause
+  cloudletResume
+  cloudletFinish
+  getTotalUtilizationOfCpu
+  ...
+
 ## Network/Datacenter/ 
 ## Network/Datacenter/ 
