@@ -14,6 +14,7 @@ RAM = 内存占用 可以是 512MB 1GB 2GB...
 BW = bandwidth 占用的宽带
 Event = 发送的事件
 predicate = 用来比对事件类型？
+mips = CPU运行?
 
 ## CloudLet
 ResCloudlet
@@ -508,5 +509,27 @@ method
   getTotalUtilizationOfCpu
   ...
 
+## Network/Datacenter/ Constants = 一些常量
+## Network/Datacenter/ NetworkHost .- Host = 管理packets到Vm
+method
+  updateVmsProcessing
+  recvpackets 接收Packet和转到Vm上 
+  sendpackets 发送到本地或别的Vm 
+  getMaxUtilizationAmongVmsPes 一个Vm最大的PE(运行单位)
+
+
+## Network/Datacenter/ NetworkPacket = Packet模型 
+## Network/Datacenter/ NetworkVm .- Vm = 网络Vm模型 
+
+## Network/Datacenter/ NetworkVmAllocationPolicy .- VmAllocationPolicy
+method 
+
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
+## Network/Datacenter/ 
 ## Network/Datacenter/ 
 ## Network/Datacenter/ 
